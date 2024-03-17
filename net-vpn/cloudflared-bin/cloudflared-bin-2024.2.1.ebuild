@@ -22,7 +22,7 @@ RDEPEND="
 "
 
 src_unpack() {
-    mkdir -p "${WORKDIR}"
+    mkdir -p "${S}"
 }
 
 src_install() {
