@@ -37,6 +37,10 @@ SLOT="0/${PVR}"
 RESTRICT="mirror"
 IUSE="+pie"
 
+RDEPEND="
+    !net-vpn/cloudflared-bin
+"
+
 src_compile() {
     # -buildmode=pie forces external linking mode, even CGO_ENABLED=0
     # https://github.com/golang/go/issues/18968
