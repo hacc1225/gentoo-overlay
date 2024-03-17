@@ -21,6 +21,10 @@ RDEPEND="
     !net-vpn/cloudflared
 "
 
+src_unpack() {
+    mkdir -p "${WORKDIR}"
+}
+
 src_install() {
 	if use x86; then
 		newexe "${DISTDIR}/${P}-x86" cloudflared
