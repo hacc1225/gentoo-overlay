@@ -3,6 +3,8 @@
 
 EAPI=8
 
+inherit systemd
+
 SRC_URI="
     x86? ( https://github.com/cloudflare/cloudflared/releases/download/${PV}/cloudflared-linux-386 -> ${P}-x86 )
     amd64? ( https://github.com/cloudflare/cloudflared/releases/download/${PV}/cloudflared-linux-amd64 -> ${P}-amd64 )
