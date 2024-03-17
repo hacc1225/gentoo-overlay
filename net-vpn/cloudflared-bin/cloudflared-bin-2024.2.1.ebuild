@@ -25,21 +25,21 @@ RDEPEND="
 
 src_unpack() {
     mkdir -p "${S}"
-}
-
-src_install() {
-	if use x86; then
-		newexe "${DISTDIR}/${P}-x86" cloudflared
+    if use x86; then
+		cp "${DISTDIR}/${P}-x86" ${S}/cloudflared
 	elif use amd64; then
-		newexe "${DISTDIR}/${P}-amd64" cloudflared
+		cp "${DISTDIR}/${P}-amd64" ${S}/cloudflared
 	elif use arm; then
-		newexe "${DISTDIR}/${P}-arm" cloudflared
+		cp "${DISTDIR}/${P}-arm" ${S}/cloudflared
     elif use arm64; then
-        newexe "${DISTDIR}/${P}-arm64" cloudflared
+        cp "${DISTDIR}/${P}-arm64" ${S}/cloudflared
 	else
 		die "Prebuild cloudflared only supports x86, amd64, arm and arm64"
 	fi
+}
 
+src_install() {
+    dobin cloudflared
     insinto /etc/cloudflared
     doins "${FILESDIR}"/config.yml
     newinitd "${FILESDIR}"/cloudflared.initd cloudflared
