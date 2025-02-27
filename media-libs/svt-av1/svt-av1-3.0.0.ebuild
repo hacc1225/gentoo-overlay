@@ -22,6 +22,7 @@ LICENSE="BSD-2 Apache-2.0 BSD ISC LGPL-2.1+ MIT"
 SLOT="0"
 
 BDEPEND="amd64? ( dev-lang/yasm )"
+DEPEND="dev-libs/cpuinfo"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-1.5.0-fortify-no-override.patch
@@ -37,6 +38,7 @@ multilib_src_configure() {
 		# .. and https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/.gitlab/workflows/linux/.gitlab-ci.yml implies it's all quite manual?
 		-DBUILD_TESTING=OFF
 		-DCMAKE_OUTPUT_DIRECTORY="${BUILD_DIR}"
+		-DUSE_EXTERNAL_CPUINFO=ON
 	)
 
 	[[ ${ABI} == amd64 || ${ABI} == arm64 ]] && mycmakeargs+=( -DCOMPILE_C_ONLY=OFF )
