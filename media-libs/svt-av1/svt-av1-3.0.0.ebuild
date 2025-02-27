@@ -19,7 +19,7 @@ fi
 
 # Also see "Alliance for Open Media Patent License 1.0"
 LICENSE="BSD-2 Apache-2.0 BSD ISC LGPL-2.1+ MIT"
-SLOT="0"
+SLOT="0/$(ver_cut 1)"
 
 BDEPEND="amd64? ( dev-lang/yasm )"
 DEPEND="dev-libs/cpuinfo"
