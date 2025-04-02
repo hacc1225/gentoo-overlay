@@ -24,7 +24,7 @@ SLOT="0"
 BDEPEND="amd64? ( dev-lang/yasm )"
 DEPEND="dev-libs/cpuinfo"
 
-IUSE="cpu_flags_arm_neon cpu_flags_arm_crc32 cpu_flags_arm_asimddp cpu_flags_arm_i8mm cpu_flags_arm_sve cpu_flags_arm_sve2"
+IUSE="cpu_flags_arm_crc32 cpu_flags_arm_asimddp cpu_flags_arm_i8mm cpu_flags_arm_sve cpu_flags_arm_sve2"
 
 
 PATCHES=(
@@ -42,7 +42,7 @@ multilib_src_configure() {
 		-DBUILD_TESTING=OFF
 		-DCMAKE_OUTPUT_DIRECTORY="${BUILD_DIR}"
 		-DUSE_EXTERNAL_CPUINFO=ON
-		-DENABLE_NEON=$(usex cpu_flags_arm_neon)
+		-DENABLE_NEON=ON
 		-DENABLE_ARM_CRC32=$(usex cpu_flags_arm_crc32)
 		-DENABLE_NEON_DOTPROD=$(usex cpu_flags_arm_asimddp)
 		-DENABLE_NEON_I8MM=$(usex cpu_flags_arm_i8mm)
