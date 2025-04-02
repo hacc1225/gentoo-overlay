@@ -42,7 +42,6 @@ multilib_src_configure() {
 		-DBUILD_TESTING=OFF
 		-DCMAKE_OUTPUT_DIRECTORY="${BUILD_DIR}"
 		-DUSE_EXTERNAL_CPUINFO=ON
-		-DENABLE_NEON=ON
 		-DENABLE_ARM_CRC32=$(usex cpu_flags_arm_crc32)
 		-DENABLE_NEON_DOTPROD=$(usex cpu_flags_arm_asimddp)
 		-DENABLE_NEON_I8MM=$(usex cpu_flags_arm_i8mm)
