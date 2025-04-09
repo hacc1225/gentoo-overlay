@@ -7,6 +7,7 @@ ETYPE="sources"
 KERNEL_URI="https://gitlab.com/hacc1225/cix-linux.git"
 K_WANT_GENPATCHES="base extras"
 K_GENPATCHES_VER="45"
+K_FROM_GIT="yes"
 
 EGIT_REPO_URI="${KERNEL_URI}"
 EGIT_COMMIT="${PV##*_p}"
