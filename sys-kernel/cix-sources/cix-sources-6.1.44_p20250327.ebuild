@@ -22,7 +22,7 @@ SRC_URI="${GENPATCHES_URI}"
 KEYWORDS="~arm64"
 IUSE="experimental"
 
-S="${WORKDIR}/${P}"
+S="${WORKDIR}/linux-cix-${PV%%_*}"
 
 src_unpack() {
     git-r3_src_unpack
