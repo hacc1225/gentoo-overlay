@@ -10,7 +10,7 @@ K_GENPATCHES_VER="45"
 
 EGIT_REPO_URI="${KERNEL_URI}"
 EGIT_COMMIT="${PV##*_p}"
-EGIT_DEPTH="1"
+EGIT_CLONE_TYPE="shallow"
 
 inherit git-r3 kernel-2
 detect_version
