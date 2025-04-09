@@ -11,7 +11,7 @@ K_GENPATCHES_VER="45"
 EGIT_REPO_URI="${KERNEL_URI}"
 EGIT_COMMIT="${PV##*_p}"
 EGIT_CLONE_TYPE="shallow"
-EGIT_CHECKOUT_DIR="${WORKDIR}/linux-cix-${PV%%_*}"
+EGIT_CHECKOUT_DIR="${WORKDIR}/linux-${PV%%_*}-cix"
 
 inherit git-r3 kernel-2
 detect_version
