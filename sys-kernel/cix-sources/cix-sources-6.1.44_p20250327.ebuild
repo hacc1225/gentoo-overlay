@@ -12,7 +12,7 @@ DESCRIPTION="CIX BSP kernel sources based on Linux ${KV_MAJOR}.${KV_MINOR}.${KV_
 HOMEPAGE="https://gitlab.com/cix-linux/cix_opensource/linux"
 
 SRC_URI="
-    https://gitlab.com/hacc1225/cix-linux/-/archive/${PV##*_p}/cix-linux-${PV##*_p}.tar.gz -> ${P}.tar.gz
+    https://gitlab.com/hacc1225/cix-linux/-/archive/${PV##*_p}/cix-linux-${PV##*_p}.tar.gz -> linux-${KV_MAJOR}.${KV_MINOR}.tar.gz
     ${GENPATCHES_URI}
 "
 
