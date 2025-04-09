@@ -15,7 +15,6 @@ EGIT_CLONE_TYPE="shallow"
 EGIT_CHECKOUT_DIR="${WORKDIR}/linux-${PV%%_*}-cix"
 
 inherit git-r3 kernel-2
-handle_genpatches
 detect_version
 detect_arch
 
@@ -32,6 +31,7 @@ src_unpack() {
 }
 
 src_prepare() {
+    handle_genpatches
     kernel-2_src_prepare
 }
 
