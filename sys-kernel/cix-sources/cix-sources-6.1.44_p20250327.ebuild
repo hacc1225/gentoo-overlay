@@ -11,6 +11,7 @@ K_GENPATCHES_VER="45"
 EGIT_REPO_URI="${KERNEL_URI}"
 EGIT_COMMIT="${PV##*_p}"
 EGIT_CLONE_TYPE="shallow"
+EGIT_CHECKOUT_DIR="${WORKDIR}/linux-cix-${PV%%_*}"
 
 inherit git-r3 kernel-2
 detect_version
@@ -22,7 +23,7 @@ SRC_URI="${GENPATCHES_URI}"
 KEYWORDS="~arm64"
 IUSE="experimental"
 
-S="${WORKDIR}/linux-cix-${PV%%_*}"
+S="${EGIT_CHECKOUT_DIR}"
 
 src_unpack() {
     git-r3_src_unpack
