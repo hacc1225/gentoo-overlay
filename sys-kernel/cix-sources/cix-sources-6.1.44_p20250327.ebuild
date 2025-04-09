@@ -29,7 +29,6 @@ S="${EGIT_CHECKOUT_DIR}"
 
 src_unpack() {
     git-r3_src_unpack
-    kernel-2_src_unpack
 }
 
 src_prepare() {
