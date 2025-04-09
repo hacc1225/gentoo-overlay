@@ -23,6 +23,12 @@ IUSE="experimental"
 
 S="${WORKDIR}/${P}"
 
+src_unpack() {
+    git-r3_src_unpack
+    cd "${S}"
+    handle_genpatches
+}
+
 src_prepare() {
     kernel-2_src_prepare
 }
