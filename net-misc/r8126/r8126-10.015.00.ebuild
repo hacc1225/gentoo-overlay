@@ -5,7 +5,7 @@ EAPI=8
 
 inherit linux-mod-r1
 
-DESCRIPTION="r8125 vendor driver for Realtek RTL8125 PCI-E NICs"
+DESCRIPTION="r8126 vendor driver for Realtek RTL8125 PCI-E NICs"
 HOMEPAGE="https://www.realtek.com/Download/List?cate_id=584"
 # Mirrored to avoid captcha
 SRC_URI="https://github.com/openwrt/rtl8126/releases/download/${PV}/${P}.tar.bz2"
@@ -22,6 +22,20 @@ PATCHES=(
 
 CONFIG_CHECK="~!R8169"
 WARNING_R8169="CONFIG_R8169 is enabled. ${PN} will not be loaded unless kernel driver Realtek 8169 PCI Gigabit Ethernet (CONFIG_R8169) is DISABLED."
+
+src_prepare() {
+	default
+
+	local module_makefile="${S}/src/Makefile"
+
+	if [[ ! -f "${module_makefile}" ]]; then
+		die "Makefile not found at ${module_makefile}"
+	fi
+
+	sed -i 's/EXTRA_CFLAGS *+=/ccflags-y +=/g' "${module_makefile}" || die "sed replacement failed for EXTRA_CFLAGS in ${module_makefile}"
+
+	 einfo "Replaced EXTRA_CFLAGS with ccflags-y"
+}
 
 src_compile() {
 	local modlist=( ${PN}=kernel/drivers/net/ethernet/realtek:src )
