@@ -1,6 +1,6 @@
 diff '--color=auto' -ur a/src/r8126_ptp.c b/src/r8126_ptp.c
---- a/src/r8126_ptp.c	2025-04-26 06:57:43.987721811 +0200
-+++ b/src/r8126_ptp.c	2025-04-26 07:08:32.491634949 +0200
+--- a/src/r8126_ptp.c	2025-01-15 15:48:21.000000000 +0100
++++ b/src/r8126_ptp.c	2025-05-29 13:58:52.652475100 +0200
 @@ -357,7 +357,7 @@
  }
  
@@ -10,9 +10,22 @@ diff '--color=auto' -ur a/src/r8126_ptp.c b/src/r8126_ptp.c
  {
          struct rtl8126_private *tp = netdev_priv(netdev);
  
+@@ -741,8 +741,12 @@
+ 
+         /* init a hrtimer for pps */
+         tp->pps_enable = 0;
++        #if LINUX_VERSION_CODE < KERNEL_VERSION(6,15,0)
+         hrtimer_init(&tp->pps_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+         tp->pps_timer.function = rtl8126_hrtimer_for_pps;
++        #else
++        hrtimer_setup(&tp->pps_timer, rtl8126_hrtimer_for_pps, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
++        #endif
+ 
+         /* reset the PTP related hardware bits */
+         rtl8126_ptp_reset(tp);
 diff '--color=auto' -ur a/src/r8126_ptp.h b/src/r8126_ptp.h
---- a/src/r8126_ptp.h	2025-04-26 06:57:43.987721811 +0200
-+++ b/src/r8126_ptp.h	2025-04-26 07:06:24.789941239 +0200
+--- a/src/r8126_ptp.h	2025-01-15 15:48:21.000000000 +0100
++++ b/src/r8126_ptp.h	2025-05-29 13:49:47.423912592 +0200
 @@ -35,12 +35,19 @@
  #ifndef _LINUX_R8126_PTP_H
  #define _LINUX_R8126_PTP_H
