@@ -11,9 +11,7 @@ PrivateUsers=true
 Restart=on-failure
 RestartSec=5s
 TimeoutStartSec=0
-
-# Allow cloudflared access to logfile
-ReadWritePaths=/var/log/cloudflared.log
+LogsDirectory=cloudflared
 
 # Allow cloudflared to bind ports in the range of 0-1024 and restrict it to
 # that capability
