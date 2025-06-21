@@ -1,0 +1,57 @@
+diff '--color=auto' -ur a/src/r8125_ptp.c b/src/r8125_ptp.c
+--- a/src/r8125_ptp.c	2025-06-03 10:40:49.000000000 +0200
++++ b/src/r8125_ptp.c	2025-06-21 21:27:16.328386595 +0200
+@@ -645,7 +645,7 @@
+ 
+ #if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
+ int rtl8125_get_ts_info(struct net_device *netdev,
+-                        struct ethtool_ts_info *info)
++                        struct rtl_ethtool_ts_info *info)
+ #else
+ int rtl8125_get_ts_info(struct net_device *netdev,
+                         struct kernel_ethtool_ts_info *info)
+@@ -1213,8 +1213,12 @@
+         switch (tp->HwSuppPtpVer) {
+         case 3:
+                 tp->pps_enable = 0;
++                #if LINUX_VERSION_CODE < KERNEL_VERSION(6,15,0)
+                 hrtimer_init(&tp->pps_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+                 tp->pps_timer.function = rtl8125_phy_hrtimer_for_pps;
++                #else
++                hrtimer_setup(&tp->pps_timer, rtl8125_phy_hrtimer_for_pps, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
++                #endif
+                 break;
+         default:
+                 break;
+diff '--color=auto' -ur a/src/r8125_ptp.h b/src/r8125_ptp.h
+--- a/src/r8125_ptp.h	2025-06-03 10:40:49.000000000 +0200
++++ b/src/r8125_ptp.h	2025-06-21 21:24:21.638535870 +0200
+@@ -35,12 +35,19 @@
+ #ifndef _LINUX_rtl8125_PTP_H
+ #define _LINUX_rtl8125_PTP_H
+ 
++#include <linux/version.h>
+ #include <linux/ktime.h>
+ #include <linux/timecounter.h>
+ #include <linux/net_tstamp.h>
+ #include <linux/ptp_clock_kernel.h>
+ #include <linux/ptp_classify.h>
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
++#  define rtl_ethtool_ts_info   ethtool_ts_info
++#else
++#  define rtl_ethtool_ts_info   kernel_ethtool_ts_info
++#endif /* LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0) */
++
+ #if LINUX_VERSION_CODE < KERNEL_VERSION(5,11,0)
+ #define PTP_MSGTYPE_SYNC        0x0
+ #define PTP_MSGTYPE_DELAY_REQ   0x1
+@@ -136,7 +143,7 @@
+ 
+ #if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
+ int rtl8125_get_ts_info(struct net_device *netdev,
+-                        struct ethtool_ts_info *info);
++                        struct rtl_ethtool_ts_info *info);
+ #else
+ int rtl8125_get_ts_info(struct net_device *netdev,
+                         struct kernel_ethtool_ts_info *info);
