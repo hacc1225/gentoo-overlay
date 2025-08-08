@@ -20,22 +20,19 @@ if [[ ${PV} != *9999 ]] ; then
 else
 	EGIT_BRANCH="master"
 fi
-IUSE=""
+IUSE="ndpi"
 
 S="${WORKDIR}/${PN}/userland"
 
 DEPEND="sys-kernel/linux-headers
 	sys-process/numactl"
 RDEPEND="${DEPEND}
-	~net-misc/pf_ring-${PV}"
+	~net-misc/pf_ring-${PV}
+	ndpi? ( net-libs/nDPI )"
 
 src_configure() {
-	set -- "${S}/configure" \
-		--prefix="${EPREFIX}/usr" \
-		--libdir="${EPREFIX}/usr/$(get_libdir)" \
-		--mandir="${EPREFIX}/usr/share/man" \
-	echo "${@}"
-	"${@}" || die
+	econf \
+	$(use_enable ndpi)
 }
 
 src_compile() {
