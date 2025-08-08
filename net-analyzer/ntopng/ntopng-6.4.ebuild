@@ -27,7 +27,7 @@ DEPEND="dev-db/mysql-connector-c:=
 	dev-libs/openssl:=
 	net-analyzer/rrdtool
 	net-libs/libpcap
-	~net-libs/nDPI-4.8
+	~net-libs/nDPI-4.14
 	>=net-libs/zeromq-3:=
 	net-misc/curl
 	sys-libs/libcap
