@@ -46,6 +46,8 @@ src_compile() {
 src_install() {
 	cd lib/
 	emake DESTDIR="${D}" install-includes
+	insinto /usr/include
+	doins "${S}/lib/pfring_zc.h"
 	default
 	# FIXME: Do we need to install nbpftest
 }
