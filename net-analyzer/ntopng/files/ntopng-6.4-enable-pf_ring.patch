@@ -1,0 +1,81 @@
+diff '--color=auto' -ur a/configure.ac.in b/configure.ac.in
+--- a/configure.ac.in	2025-08-09 00:20:47.235043570 +0200
++++ b/configure.ac.in	2025-08-09 00:24:05.118818767 +0200
+@@ -559,66 +559,12 @@
+ ])
+ 
+ if test "${with_nedge+set}" != set; then
+-  if test -d "${HOME}/PF_RING" ; then :
+-     PF_RING_HOME=${HOME}/PF_RING
+-  elif test -d "../PF_RING" ; then :
+-     PF_RING_HOME=../PF_RING
+-  elif test -d "./PF_RING" ; then :
+-     PF_RING_HOME=./PF_RING
+-  else
+-     PF_RING_HOME=${HOME}/PF_RING
+-  fi
+-
+-  if test $SYSTEM = "FreeBSD"; then
+-     LIBPCAP="${PF_RING_HOME}/userland/libpcap/libpcap.a"
+-  else
+-    if test -d ${PF_RING_HOME}; then
+-      AC_MSG_CHECKING(for PF_RING source installed in $PF_RING_HOME)
+-    fi
+-  fi
+-
+- if test -f "/usr/local/lib/libpfring.a" || test -f "/opt/pfring/lib/libpfring.a" || test -f "${PF_RING_HOME}/userland/lib/libpfring.a"; then
++  # Assume PF_RING is available and let the linker find it
++  AC_MSG_CHECKING(for PF_RING library)
+   AC_DEFINE_UNQUOTED(HAVE_PF_RING, 1, [Native PF_RING support])
+-  if test -f "${PF_RING_HOME}/userland/lib/libpfring.a"; then
+-     echo "${PF_RING_HOME}/userland/libpcap/libpcap.a"
+-     if test -f "${PF_RING_HOME}/userland/libpcap/libpcap.a"; then
+-       LIBS="${LIBS} ${PF_RING_HOME}/userland/lib/libpfring.a -L${PF_RING_HOME}/userland/libpcap/ `${PF_RING_HOME}/userland/lib/pfring_config --libs`"
+-       CXXFLAGS="${CXXFLAGS} -I${PF_RING_HOME}/kernel -I${PF_RING_HOME}/userland/lib -I${PF_RING_HOME}/userland/libpcap"
+-       echo "Using PF_RING installed in ${PF_RING_HOME}"
+-     else
+-       echo "Found PF_RING but the userland libs have not been compiled"
+-       exit 1
+-     fi
+-  else
+-     if test -d "/opt/pfring"; then
+-       if test -f "/opt/pfring/lib/libpfring.a"; then
+-         echo "/opt/pfring/lib/libpfring.a"
+-         LIBS="${LIBS} /opt/pfring/lib/libpfring.a -L/opt/pfring/lib"
+-         CXXFLAGS="${CXXFLAGS} -I/opt/pfring/include"
+-         echo "Using PF_RING installed in /opt/pfring"
+-      else
+-       if test -f "/usr/local/lib/libpfring.a"; then
+-        if test -f "/usr/local/lib/libpcap.a"; then
+-    	  LIBS="${LIBS} /usr/local/lib/libpfring.a"
+-          echo "Using PF_RING installed in /usr/local/lib"
+-	  AC_CHECK_LIB([pcap], [pcap_open_live], pcap=true)
+-	  if test x$pcap = x
+-	  then
+-	    echo "Found /usr/local/lib/libpfring.a but missing header files."
+-	    exit 1
+-	  fi
+-	else
+-	  echo "Found /usr/local/lib/libpfring.a  but missing libpcap.a in the same directory"
+-	  echo "Please make sure you have installed your PF_RING libraries and try again"
+-	  exit 1
+-        fi
+-      fi
+-    fi
+-  else
+   LIBS="${LIBS} -lpfring -lpcap"
++  AC_MSG_RESULT(yes)
+   echo "Compiling ntopng with PF_RING support [${LIBS}]"
+- fi
+- fi
+ else
+   AC_CHECK_LIB([pcap], [pcap_open_live], pcap=true)
+   if test x$pcap = x
+@@ -626,7 +572,6 @@
+     echo "Please install libpcap(-dev) (http://tcpdump.org)"
+     exit 1
+   fi
+- fi
+ fi
+ 
+ SNMP_LIB=
