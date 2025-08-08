@@ -48,7 +48,7 @@ src_prepare() {
 	default
 
 	if use pfring; then
-		epatch "${FILESDIR}/ntopng-6.4-enable-pf_ring.patch"
+		eapply -p1 "${FILESDIR}/ntopng-6.4-enable-pf_ring.patch"
 	fi
 
 	# Follows upstream's autogen.sh
