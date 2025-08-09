@@ -101,7 +101,7 @@ src_install() {
 	doins -r third-party/lua-resty-template-master
 
 	insinto "${SHARE_NTOPNG_DIR}/clickhouse"
-	doins -r ficlickhouse/*
+	doins -r clickhouse/*
 
 	exeinto /usr/bin
 	doexe "${PN}"
