@@ -7,7 +7,7 @@ inherit autotools toolchain-funcs systemd
 
 # Check this on bumps, get latest commit from the relevant branch (e.g. 6.0-stable)
 # See bug #894152 and https://github.com/ntop/ntopng/issues/7203
-NTOPNG_DIST_COMMIT="34c53388e8da61e6e04b3efd8e98dcd9b9e4fe1b"
+NTOPNG_DIST_COMMIT="af97c4a85f44e52b0859b83cc170f07173d6bb85"
 DESCRIPTION="Network traffic analyzer with web interface"
 HOMEPAGE="https://www.ntop.org/"
 SRC_URI="https://github.com/ntop/ntopng/archive/${PV}.tar.gz -> ${P}.tar.gz"
