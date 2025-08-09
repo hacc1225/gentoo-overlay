@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit autotools toolchain-funcs
+inherit autotools toolchain-funcs systemd
 
 # Check this on bumps, get latest commit from the relevant branch (e.g. 6.0-stable)
 # See bug #894152 and https://github.com/ntop/ntopng/issues/7203
@@ -16,7 +16,7 @@ SRC_URI+=" https://github.com/ntop/ntopng-dist/archive/${NTOPNG_DIST_COMMIT}.tar
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~arm64"
-IUSE="pfring"
+IUSE="pfring systemd"
 
 DEPEND="dev-db/mysql-connector-c:=
 	dev-db/sqlite:3
@@ -101,17 +101,24 @@ src_install() {
 	doins -r third-party/lua-resty-template-master
 
 	insinto "${SHARE_NTOPNG_DIR}/clickhouse"
-	doins -r clickhouse/*
+	doins -r ficlickhouse/*
 
 	exeinto /usr/bin
 	doexe "${PN}"
 	doman "${PN}.8"
 
-	newinitd "${FILESDIR}"/ntopng.init.d ntopng
-	newconfd "${FILESDIR}"/ntopng.conf.d ntopng
-
 	keepdir /var/lib/ntopng
 	fowners ntopng /var/lib/ntopng
+
+	if use systemd; then
+		systemd_dounit "${FILESDIR}/ntopng.service"
+		systemd_dounit "${FILESDIR}/ntopng@.service"
+		insinto /etc
+		doins -r "${FILESDIR}/ntopng"
+	else
+		newinitd "${FILESDIR}"/ntopng.init.d ntopng
+		newconfd "${FILESDIR}"/ntopng.conf.d ntopng
+	fi
 }
 
 pkg_postinst() {
