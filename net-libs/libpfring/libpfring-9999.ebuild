@@ -28,7 +28,7 @@ DEPEND="sys-kernel/linux-headers
 	sys-process/numactl"
 RDEPEND="${DEPEND}
 	~net-misc/pf_ring-${PV}
-	ndpi? ( net-libs/nDPI )"
+	ndpi? ( >=net-libs/nDPI-4.14 )"
 
 src_configure() {
 	econf \
