@@ -1,0 +1,57 @@
+diff '--color=auto' -ur a/src/r8126_ptp.c b/src/r8126_ptp.c
+--- a/src/r8126_ptp.c	2025-07-14 10:54:35.000000000 +0200
++++ b/src/r8126_ptp.c	2025-08-18 12:54:20.017340499 +0200
+@@ -358,7 +358,7 @@
+ 
+ #if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
+ int rtl8126_get_ts_info(struct net_device *netdev,
+-                        struct ethtool_ts_info *info)
++                        struct rtl_ethtool_ts_info *info)
+ #else
+ int rtl8126_get_ts_info(struct net_device *netdev,
+                         struct kernel_ethtool_ts_info *info)
+@@ -751,8 +751,12 @@
+ 
+         /* init a hrtimer for pps */
+         tp->pps_enable = 0;
++        #if LINUX_VERSION_CODE < KERNEL_VERSION(6,15,0)
+         hrtimer_init(&tp->pps_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+         tp->pps_timer.function = rtl8126_hrtimer_for_pps;
++        #else
++        hrtimer_setup(&tp->pps_timer, rtl8126_hrtimer_for_pps, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
++        #endif
+ 
+         /* reset the PTP related hardware bits */
+         rtl8126_ptp_reset(tp);
+diff '--color=auto' -ur a/src/r8126_ptp.h b/src/r8126_ptp.h
+--- a/src/r8126_ptp.h	2025-07-14 10:54:35.000000000 +0200
++++ b/src/r8126_ptp.h	2025-08-18 12:58:08.105426235 +0200
+@@ -35,12 +35,19 @@
+ #ifndef _LINUX_R8126_PTP_H
+ #define _LINUX_R8126_PTP_H
+ 
++#include <linux/version.h>
+ #include <linux/ktime.h>
+ #include <linux/timecounter.h>
+ #include <linux/net_tstamp.h>
+ #include <linux/ptp_clock_kernel.h>
+ #include <linux/ptp_classify.h>
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
++#  define rtl_ethtool_ts_info   ethtool_ts_info
++#else
++#  define rtl_ethtool_ts_info   kernel_ethtool_ts_info
++#endif /* LINUX_VERSION_CODE < KERNEL_VERSION(6,9,0) */
++
+ #ifndef PTP_CLASS_NONE
+ #define PTP_CLASS_NONE  0x00
+ #endif
+@@ -187,7 +194,7 @@
+ 
+ #if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
+ int rtl8126_get_ts_info(struct net_device *netdev,
+-                        struct ethtool_ts_info *info);
++                        struct rtl_ethtool_ts_info *info);
+ #else
+ int rtl8126_get_ts_info(struct net_device *netdev,
+                         struct kernel_ethtool_ts_info *info);

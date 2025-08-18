@@ -8,7 +8,7 @@ inherit linux-mod-r1
 DESCRIPTION="r8126 vendor driver for Realtek RTL8125 PCI-E NICs"
 HOMEPAGE="https://www.realtek.com/Download/List?cate_id=584"
 # Mirrored to avoid captcha
-SRC_URI="https://github.com/openwrt/rtl8126/releases/download/${PV}/${P}.tar.bz2"
+SRC_URI="https://github.com/hacc1225/r8126/releases/download/${PV}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
