@@ -34,7 +34,7 @@ src_prepare() {
 
 	sed -i 's/EXTRA_CFLAGS *+=/ccflags-y +=/g' "${module_makefile}" || die "sed replacement failed for EXTRA_CFLAGS in ${module_makefile}"
 
-	 einfo "Replaced EXTRA_CFLAGS with ccflags-y"
+	einfo "Replaced EXTRA_CFLAGS with ccflags-y"
 }
 
 src_compile() {

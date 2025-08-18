@@ -8,7 +8,7 @@ inherit linux-mod-r1
 DESCRIPTION="r8125 vendor driver for Realtek RTL8125 PCI-E NICs"
 HOMEPAGE="https://www.realtek.com/Download/List?cate_id=584"
 # Mirrored to avoid captcha
-SRC_URI="https://github.com/openwrt/rtl8125/releases/download/${PV}/${P}.tar.bz2"
+SRC_URI="https://github.com/hacc1225/r8125/releases/download/${PV}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -34,7 +34,7 @@ src_prepare() {
 
 	sed -i 's/EXTRA_CFLAGS *+=/ccflags-y +=/g' "${module_makefile}" || die "sed replacement failed for EXTRA_CFLAGS in ${module_makefile}"
 
-	 einfo "Replaced EXTRA_CFLAGS with ccflags-y"
+	einfo "Replaced EXTRA_CFLAGS with ccflags-y"
 }
 
 src_compile() {
