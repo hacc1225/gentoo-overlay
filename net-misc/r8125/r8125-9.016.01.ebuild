@@ -17,6 +17,7 @@ KEYWORDS="~amd64 ~x86 ~arm64"
 IUSE="+multi-tx-q ptp +rss use-firmware"
 
 PATCHES=(
+	"${FILESDIR}/${PN}-9.016.00-fix-build-with-firmware.patch"
 	"${FILESDIR}/${P}-ptp-linux-6.11.patch"
 )
 
