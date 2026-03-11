@@ -295,6 +295,7 @@ multilib_src_configure() {
 		-Dudev=enabled
 		-Dudevrulesdir="${EPREFIX}$(get_udevdir)/rules.d"
 		-Dsdl2=disabled # Controls SDL2 dependent code (currently only examples when -Dinstalled_tests=enabled which we never install)
+		-Dlibmysofa=disabled # libmysofa is unpackaged
 		$(meson_native_use_feature extra sndfile) # Enables libsndfile dependent code (currently only pw-cat)
 		-Dsession-managers="[]" # All available session managers are now their own projects, so there's nothing to build
 
